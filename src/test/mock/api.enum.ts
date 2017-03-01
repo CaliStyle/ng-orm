@@ -1,5 +1,5 @@
 export enum APIS {
-    FIRST,
-    SECOND
+  FIRST,
+  SECOND
 }
 

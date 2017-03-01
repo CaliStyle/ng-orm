@@ -1,15 +1,16 @@
 {
-  "name": "ng2-rest",
-  "version": "5.0.47",
-  "description": "rest package for angular 2",
+  "name": "ng-orm",
+  "version": "0.0.1",
+  "description": "Rest orm for angular ^2",
   "main": "index.js",
   "scripts": {
-    "test": "karma start --auto-watch --no-single-run",
+    "test": "karma start --single-run",
+    "test:continue": "karma start --auto-watch --no-single-run",
     "release": "git add --all . && git commit -m\"fix\" && git push origin master && npm publish"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/darekf77/ng2-rest.git"
+    "url": "git+https://github.com/CaliStyle/ng-orm.git"
   },
   "keywords": [
     "rest",
@@ -24,9 +25,9 @@
   },
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/darekf77/ng2-rest/issues"
+    "url": "https://github.com/CaliStyle/ng-orm/issues"
   },
-  "homepage": "https://github.com/darekf77/ng2-rest#readme",
+  "homepage": "https://github.com/CaliStyle/ng-orm#readme",
   "dependencies": {
     "@types/diff": "0.0.31",
     "@types/faker": "^3.1.32",
@@ -121,9 +122,5 @@
     "webpack-merge": "~1.0.1",
     "zone.js": "~0.7.4"
   },
-  "readmeFilename": "README.md",
-  "gitHead": "03201bb70d036d4d999c12f93b423bcbcac8d96a",
-  "_id": "ng2-rest@1.0.2",
-  "_shasum": "21857955e9ba3baa97075bdb6ca4d5ee216e2dd2",
-  "_from": "ng2-rest@latest"
+  "readmeFilename": "README.md"
 }

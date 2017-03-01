@@ -1,11 +1,10 @@
 # IDE-s #
 .idea
-
+.vscode
 .DS_Store
 
 # Node Files #
 /node_modules
-/bower_components
 npm-debug.log
 copy_crm.sh
 
@@ -19,4 +18,3 @@ ng2-rest.js.map
 /copy
 /typings
 /js
- 

@@ -4,9 +4,9 @@ import { JsonpModule, HttpModule } from '@angular/http';
 import { SimpleResource } from './simple-resource';
 
 @NgModule({
-    imports: [JsonpModule, HttpModule],
-    exports: [],
-    declarations: [],
-    providers: [Resource],
+  imports: [JsonpModule, HttpModule],
+  exports: [],
+  declarations: [],
+  providers: [Resource],
 })
 export class Ng2RestModule { }

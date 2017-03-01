@@ -1,24 +1,29 @@
-## ng2-rest ##
+# ng-orm
+
+[![NPM version][npm-image]][npm-url]
+[![Build status][ci-image]][ci-url]
+[![Dependency Status][daviddm-image]][daviddm-url]
+[![Code Climate][codeclimate-image]][codeclimate-url]
+
+REST api ORM with **Angular ^2**
+
+Based on the work of [ng2-rest](https://github.com/darekf77/ng2-rest)
 
 Compatible with
 
  1. [AngularClass/angular2-webpack-starter](https://github.com/AngularClass/angular2-webpack-starter)
  2. [Angular CLI](https://github.com/angular/angular-cli)
 
-REST api with **Angular 2.**,  much more powerfull alternative to angularjs $resource;
-
-[Demo github](https://darekf77.github.io/ng2-rest/docs/dist)
-
+## Install
 To install package run:
+```sh
+$ npm install ng-orm --save
+```
 
-    npm install ng2-rest --save
-
-Import module
-
-
+## Import module
 
 ```ts
-	import {Ng2RestModule} from 'ng2-rest';
+	import {Ng2RestModule} from 'ng-orm';
 
 	@NgModule({
 	  bootstrap: [AppComponent],
@@ -28,10 +33,9 @@ Import module
   export class AppModule { }
 ```
 
-SimpleResource
-==============
+## SimpleResource
 
-Quicket way to use your REST API
+Quickest way to use your REST API
 ```ts
 import { DatabaseService } from './database.service';
 
@@ -113,8 +117,7 @@ Specification
 | **update** | `model, UrlParams[]` |   put object model |
 | **remove** | `UrlParams[]` |   remove object by params |parameters |
 
-Resource
-========
+## Resource
 
 Fit you existing API (not only REST) into new fluent objects...
 **Resource** it is more advance version of **SimpleResource**
@@ -195,7 +198,7 @@ Examples:
 ...
 
 import { Subscription } from 'rxjs';
-import { Resource } from 'ng2-rest';
+import { Resource } from 'ng-orm';
 
 import { DatabaseService } from './service';
 
@@ -226,12 +229,12 @@ export class DemoComponent implements OnInit, OnDestroy {
 	
 ```
 
-Simple data mocking
-============
+## Simple data mocking
+
 
 It is one of the best features here. You don't need a backend for your front-end coding. 
 
- Simplest way to mocking data:
+Simplest way to mocking data:
 ```ts
 	// user.json
 	[{ id: 12, name: 'Dariusz' },
@@ -254,8 +257,7 @@ It is one of the best features here. You don't need a backend for your front-end
 ```
  
 
-Mock Controller
-===============
+## Mock Controller
 
  Sample MockController function to just return mocked data based on params:
 ```ts
@@ -291,8 +293,7 @@ Mock Controller
 ```
 
 
-MockAutoBackend
-===============
+## MockAutoBackend
 
 #### generators [$]
 
@@ -341,8 +342,7 @@ Outputs:
 }
 ```
 
-Pagination example
-------------------
+### Pagination example
 
  Sample MockController generating pagination data with MockAutoBackend:
 ```ts
@@ -387,14 +387,20 @@ Pagination example
     
 ```
 
-Headers
--------
+### Headers
 
-With ng2-rest you can also easly acces you response and request headers
+With ng-orm you can also easily access your response and request headers
 ```ts
 	// you can also use class Resource for that
-	console.log(SimpleResource.headers.request);
-	console.log(SimpleResource.headers.response);
-
+	console.log(SimpleResource.Headers.request);
+	console.log(SimpleResource.Headers.response);
 ```
 
+[npm-image]: https://img.shields.io/npm/v/ng-orm.svg?style=flat-square
+[npm-url]: https://npmjs.org/package/ng-orm
+[ci-image]: https://img.shields.io/circleci/project/github/CaliStyle/ng-orm/nmaster.svg
+[ci-url]: https://circleci.com/gh/CaliStyle/ng-orm/tree/master
+[daviddm-image]: http://img.shields.io/david/calistyle/ng-orm.svg?style=flat-square
+[daviddm-url]: https://david-dm.org/calistyle/ng-orm
+[codeclimate-image]: https://img.shields.io/codeclimate/github/calistyle/ng-orm.svg?style=flat-square
+[codeclimate-url]: https://codeclimate.com/github/calistyle/ng-orm
