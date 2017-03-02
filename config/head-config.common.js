@@ -1,3 +1,5 @@
+'use strict'
+
 /**
  * Configuration for head elements added during the creation of index.html.
  *
