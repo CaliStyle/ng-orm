@@ -41,15 +41,20 @@ export class TestMap {
           expect(Resource.map(APIS.FIRST.toString(), url)).toBeTruthy();
           expect(Resource.map(APIS.FIRST.toString(), url)).toBeFalsy();
         }));
-
-      it('should map correct url with / ', inject([Resource, Http, Jsonp],
+      it('should map correct url with just "/api" ', inject([Resource, Http, Jsonp],
+        (rest: Resource<APIS, User, User[]>, http: Http, jp) => {
+          rest = new Resource<APIS, User, User[]>(http, jp);
+          Resource.reset();
+          expect(Resource.map(APIS.FIRST.toString(), '/api')).toBeTruthy();
+        }));
+      it('should map correct url "/" ', inject([Resource, Http, Jsonp],
         (rest: Resource<APIS, User, User[]>, http: Http, jp) => {
           rest = new Resource<APIS, User, User[]>(http, jp);
           Resource.reset();
           expect(Resource.map(APIS.FIRST.toString(), 'http://localhost:8080/')).toBeTruthy();
         }));
 
-      it('should map correct url witout / ', inject([Resource, Http, Jsonp],
+      it('should map correct url without "/" ', inject([Resource, Http, Jsonp],
         (rest: Resource<APIS, User, User[]>, http: Http, jp) => {
           rest = new Resource<APIS, User, User[]>(http, jp);
           Resource.reset();

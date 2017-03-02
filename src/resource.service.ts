@@ -157,10 +157,11 @@ export class Resource<E, T, TA> {
    * @returns {boolean}
    */
   public static use<T extends string>(endpoint_url: T): boolean {
-    let regex = /((http|https):\/\/)?(\w+:{0,1}\w*)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%!\-\/]))?/;
-    let e: string = endpoint_url;
-    if (!regex.test(endpoint_url)) {
-      console.error('Url address is not correct: ' + endpoint_url);
+    let regexUrl = /(http|https):\/\/(\w+:{0,1}\w*)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%!\-\/]))?/;
+    let regexUri = /^(:)?(\/)(\S+)/;
+    let e:string = endpoint_url;
+    if (!regexUrl.test(endpoint_url) && !regexUri.test(endpoint_url)) {
+      console.error(`use Url address is not correct: ${endpoint_url}`);
       return false;
     }
     if (Resource.endpoints[e] !== undefined) {
@@ -204,10 +205,11 @@ export class Resource<E, T, TA> {
       console.error(`Cannot use 'map()' function after 'mapEureka()'`);
       return false;
     }
-    let regex = /(http|https):\/\/(\w+:{0,1}\w*)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%!\-\/]))?/;
-    let e = endpoint;
-    if (!regex.test(url)) {
-      console.error(`Url address is not correct: ${ url }`);
+    let regexUrl = /(http|https):\/\/(\w+:{0,1}\w*)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%!\-\/]))?/;
+    let regexUri = /^(:)?(\/)(\S+)/;
+    let e:string = endpoint;
+    if (!regexUrl.test(url) && !regexUri.test(url)) {
+      console.error(`map Url address is not correct: ${ url }`);
       return false;
     }
     if (url.charAt(url.length - 1) === '/') {
@@ -236,7 +238,7 @@ export class Resource<E, T, TA> {
    * @returns {boolean}
    */
   add(endpoint: E, model: string, group?: string, name?: string, description?: string) {
-    console.log(`I am mapping ${model} on ${<any>endpoint}`);
+    console.log(`Mapping ${model} on ${<any>endpoint}`);
     if (Rest.eureka && Rest.eureka.state === Eureka.EurekaState.DISABLED) {
       Rest.eureka.discovery(this.http);
     }

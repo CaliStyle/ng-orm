@@ -109,7 +109,7 @@ export class TestRestMock {
           }));
 
 
-      it('should retrive created mocked model with  save',
+      it('should retrieve created mocked model with  save',
         inject([Resource, Http, MockBackend, Jsonp],
           (rest: Resource<APIS, User, User[]>, http: Http, backend: MockBackend, jp: Jsonp) => {
 
@@ -146,24 +146,24 @@ export class TestRestMock {
           }));
 
       // TODO fix JSONP
-      // it('should retrieve json mocked model with jsonp method',
-      //   inject([Resource, Http, MockBackend, Jsonp],
-      //     (rest: Resource<APIS, User, User[]>, http: Http, backend: MockBackend, jp: Jsonp) => {
-      //
-      //       rest = new Resource<APIS, User, User[]>(http, jp);
-      //       let url = 'https://somewhere.com';
-      //       Resource.map(APIS.FIRST.toString(), url);
-      //       rest.add(APIS.FIRST, 'users');
-      //
-      //       rest.api(APIS.FIRST, 'users').mock(JSON.stringify(user)).jsonp().subscribe((res) => {
-      //         let o = JSON.parse(JSON.stringify(user))
-      //         console.log(o, res)
-      //         expect(this.areEqual(o, res)).toBeTruthy();
-      //       }, (err) => {
-      //         fail;
-      //       });
-      //
-      //     }));
+      xit('should retrieve json mocked model with jsonp method',
+        inject([Resource, Http, MockBackend, Jsonp],
+          (rest: Resource<APIS, User, User[]>, http: Http, backend: MockBackend, jp: Jsonp) => {
+
+            rest = new Resource<APIS, User, User[]>(http, jp);
+            let url = 'https://somewhere.com';
+            Resource.map(APIS.FIRST.toString(), url);
+            rest.add(APIS.FIRST, 'users');
+
+            rest.api(APIS.FIRST, 'users').mock(JSON.stringify(user)).jsonp().subscribe((res) => {
+              let o = JSON.parse(JSON.stringify(user))
+              console.log(o, res)
+              expect(this.areEqual(o, res)).toBeTruthy();
+            }, (err) => {
+              fail;
+            });
+
+          }));
 
       it('should retrieve mocked models with query request',
         inject([Resource, Http, MockBackend, Jsonp],
