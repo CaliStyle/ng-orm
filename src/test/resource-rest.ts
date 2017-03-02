@@ -13,7 +13,6 @@ import { MockBackend, MockConnection } from '@angular/http/testing';
 import { Rest } from '../rest';
 
 import { Resource } from '../resource.service';
-import { SimpleResource } from '../simple-resource';
 import { APIS, User } from './mock';
 
 export class TestRest {
@@ -55,9 +54,9 @@ export class TestRest {
       });
 
 
-      it('should retrive model with get request',
+      it('should retrieve model with get request',
         inject([Resource, Http, MockBackend, Jsonp],
-          (rest: Resource<APIS, User, User[]>, http: Http, backend: MockBackend, jp) => {
+          (rest: Resource<APIS, User, User[]>, http: Http, backend: MockBackend, jp: Jsonp) => {
             backend.connections.subscribe(
               (c: MockConnection) => {
 
@@ -82,9 +81,9 @@ export class TestRest {
 
           }));
 
-      it('should retrive models array with get request',
+      it('should retrieve models array with get request',
         inject([Resource, Http, MockBackend, Jsonp],
-          (rest: Resource<APIS, User, User[]>, http: Http, backend: MockBackend, jp) => {
+          (rest: Resource<APIS, User, User[]>, http: Http, backend: MockBackend, jp: Jsonp) => {
             backend.connections.subscribe(
               (c: MockConnection) => {
 
@@ -94,9 +93,6 @@ export class TestRest {
                   body: JSON.stringify(users)
                 }));
                 c.mockRespond(res);
-
-
-
               });
 
             rest = new Resource<APIS, User, User[]>(http, jp);
@@ -116,7 +112,7 @@ export class TestRest {
 
       it('should save model',
         inject([Resource, Http, MockBackend, Jsonp],
-          (rest: Resource<APIS, User, User[]>, http: Http, backend: MockBackend, jp) => {
+          (rest: Resource<APIS, User, User[]>, http: Http, backend: MockBackend, jp: Jsonp) => {
             backend.connections.subscribe(
               (c: MockConnection) => {
 
@@ -139,13 +135,11 @@ export class TestRest {
             }, (err) => {
               fail;
             });
-
           }));
-
 
       it('should update model',
         inject([Resource, Http, MockBackend, Jsonp],
-          (rest: Resource<APIS, User, User[]>, http: Http, backend: MockBackend, jp) => {
+          (rest: Resource<APIS, User, User[]>, http: Http, backend: MockBackend, jp: Jsonp) => {
             backend.connections.subscribe(
               (c: MockConnection) => {
 
@@ -173,7 +167,7 @@ export class TestRest {
 
       it('should delete model',
         inject([Resource, Http, MockBackend, Jsonp],
-          (rest: Resource<APIS, User, User[]>, http: Http, backend: MockBackend, jp) => {
+          (rest: Resource<APIS, User, User[]>, http: Http, backend: MockBackend, jp: Jsonp) => {
             backend.connections.subscribe(
               (c: MockConnection) => {
 
@@ -233,13 +227,6 @@ export class TestRest {
             });
 
           }));
-
-
-
-
-
-
-
 
     });
   }

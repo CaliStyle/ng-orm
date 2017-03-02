@@ -1,6 +1,6 @@
 {
   "name": "ng-orm",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Rest orm for angular ^2",
   "main": "index.js",
   "scripts": {
@@ -14,16 +14,23 @@
   },
   "keywords": [
     "rest",
+    "orm",
     "angular2",
     "angular 2",
     "$resource",
     "resource",
-    "ng2"
+    "ng"
   ],
-  "author": {
-    "name": "Dariusz Filipiak"
-  },
-  "license": "ISC",
+  "contributors": [
+    {
+      "name": "Scott Wyatt",
+      "url": "https://github.com/scott-wyatt"
+    },
+    {
+      "name": "Dariusz Filipiak"
+    }
+  ],
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/CaliStyle/ng-orm/issues"
   },

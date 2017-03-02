@@ -1,4 +1,4 @@
-import { Injectable, Inject, ReflectiveInjector } from '@angular/core';
+import { Injectable, Inject, Injector, ReflectiveInjector } from '@angular/core';
 import {
   Http, Response, Headers, Jsonp, HttpModule, JsonpModule, XHRConnection,
   BrowserXhr, ResponseOptions, XHRBackend, BaseResponseOptions, BaseRequestOptions,
@@ -7,41 +7,40 @@ import {
 
 import { Observable, Subject } from 'rxjs';
 import { Log, Level } from 'ng2-logger/ng2-logger';
-const log = Log.create('resouce-service', Level.__NOTHING)
+const log = Log.create('resource-service', Level.__NOTHING)
 
 import { Eureka } from './eureka';
 import { MockingMode } from './mocking-mode';
 import { UrlNestedParams } from './nested-params';
 import { Rest } from './rest.class';
 
-export const HTTP_PROVIDERS = [
-  // Jsonp, JsonpModule,
-  {
-    provide: Http, useFactory:
-    (xhrBackend: XHRBackend, requestOptions: RequestOptions): Http =>
-      new Http(xhrBackend, requestOptions),
-    deps: [XHRBackend, RequestOptions]
-  },
-  BrowserXhr,
-  { provide: RequestOptions, useClass: BaseRequestOptions },
-  { provide: ResponseOptions, useClass: BaseResponseOptions },
-  XHRBackend,
-  { provide: XSRFStrategy, useFactory: () => new CookieXSRFStrategy() },
-];
-
-export const JSONP_PROVIDERS = [
-  {
-    provide: Jsonp, useFactory:
-    (xhrBackend: XHRBackend, requestOptions: RequestOptions): Jsonp =>
-      new Jsonp(xhrBackend, requestOptions),
-    deps: [XHRBackend, RequestOptions]
-  },
-  BrowserXhr,
-  { provide: RequestOptions, useClass: BaseRequestOptions },
-  { provide: ResponseOptions, useClass: BaseResponseOptions },
-  XHRBackend,
-  { provide: XSRFStrategy, useFactory: () => new CookieXSRFStrategy() },
-];
+// export const HTTP_PROVIDERS = [
+//   {
+//     provide: Http, useFactory:
+//     (xhrBackend: XHRBackend, requestOptions: RequestOptions): Http =>
+//       new Http(xhrBackend, requestOptions),
+//     deps: [XHRBackend, RequestOptions]
+//   },
+//   BrowserXhr,
+//   { provide: RequestOptions, useClass: BaseRequestOptions },
+//   { provide: ResponseOptions, useClass: BaseResponseOptions },
+//   XHRBackend,
+//   { provide: XSRFStrategy, useFactory: () => new CookieXSRFStrategy() }
+// ];
+//
+// export const JSONP_PROVIDERS = [
+//   {
+//     provide: Jsonp, useFactory:
+//     (xhrBackend: XHRBackend, requestOptions: RequestOptions): Jsonp =>
+//       new Jsonp(xhrBackend, requestOptions),
+//     deps: [XHRBackend, RequestOptions]
+//   },
+//   BrowserXhr,
+//   { provide: RequestOptions, useClass: BaseRequestOptions },
+//   { provide: ResponseOptions, useClass: BaseResponseOptions },
+//   XHRBackend,
+//   { provide: XSRFStrategy, useFactory: () => new CookieXSRFStrategy() },
+// ];
 
 
 
@@ -53,18 +52,22 @@ export class Resource<E, T, TA> {
     Resource.endpoints = {};
     Resource.mockingModeIsSet = false;
   }
-
   private http: Http;
   private jp: Jsonp;
+
   constructor(
-    http?: Http,
-    jp?: Jsonp
+    @Inject(Http) http: Http,
+    @Inject(Jsonp) jp:Jsonp
   ) {
+    // const injector = ReflectiveInjector.resolveAndCreate([HTTP_PROVIDERS, JSONP_PROVIDERS])
+    // const injector = Injector.bind([HTTP_PROVIDERS, JSONP_PROVIDERS])
+    this.http = http // injector.get(Http)
+    this.jp = jp // injector.get(Jsonp)
+
     // Quick fix
-    if (Resource.__mockingMode === undefined) Resource.__mockingMode = MockingMode.LIVE_BACKEND_ONLY;
-    this.http = ReflectiveInjector.resolveAndCreate(HTTP_PROVIDERS).get(Http);
-    this.jp = ReflectiveInjector.resolveAndCreate(JSONP_PROVIDERS).get(Jsonp);
-    // this.jp = injector.get(Jsonp);
+    if (Resource.__mockingMode === undefined) {
+      Resource.__mockingMode = MockingMode.LIVE_BACKEND_ONLY;
+    }
   }
 
   public static get Headers() {
@@ -85,7 +88,7 @@ export class Resource<E, T, TA> {
    * state is remembered in sesssion storage.
    *
    * @static
-   * @param {string} url to ng2-rest  https://github.com/darekf77/ng2-rest
+   * @param {string} url to ng-orm
    * @param {string} Optional: Title for docs
    * @param {string} Optional: Force recreate docs every time when you are
    * using this function
@@ -207,7 +210,9 @@ export class Resource<E, T, TA> {
       console.error(`Url address is not correct: ${ url }`);
       return false;
     }
-    if (url.charAt(url.length - 1) === '/') url = url.slice(0, url.length - 1);
+    if (url.charAt(url.length - 1) === '/') {
+      url = url.slice(0, url.length - 1);
+    }
     log.i('url after', url)
     if (Resource.endpoints[e] !== undefined) {
       if (Resource.enableWarnings) {
@@ -236,8 +241,7 @@ export class Resource<E, T, TA> {
       Rest.eureka.discovery(this.http);
     }
 
-    if (Rest.eureka && Rest.eureka.state !== Eureka.EurekaState.ENABLE // && Rest.eureka.state !== EurekaState.SERVER_ERROR
-    ) {
+    if (Rest.eureka && Rest.eureka.state !== Eureka.EurekaState.ENABLE) {
       Resource.subEurekaEndpointReady.subscribe(ins => {
         console.log('SHOULD Be instance!!')
         this.add(endpoint, model, group, name, description);
@@ -252,8 +256,12 @@ export class Resource<E, T, TA> {
       let rName = slName.map(fr => (fr[0]) ? (fr[0].toUpperCase() + fr.substr(1)) : '');
       name = rName.join(' ');
     }
-    if (model.charAt(model.length - 1) === '/') model = model.slice(0, model.length - 1);
-    if (model.charAt(0) === '/') model = model.slice(1, model.length);
+    if (model.charAt(model.length - 1) === '/') {
+      model = model.slice(0, model.length - 1);
+    }
+    if (model.charAt(0) === '/') {
+      model = model.slice(1, model.length);
+    }
 
     let e: string;
     if (Rest.eureka && Rest.eureka.state === Eureka.EurekaState.ENABLE && Rest.eureka.instance) {
@@ -285,7 +293,7 @@ export class Resource<E, T, TA> {
    * @returns {Rest<T, TA>}
    */
   api(endpoint: E, model: string, usecase?: string): Rest<T, TA> {
-    console.log('hello!')
+    // console.log('hello!')
 
     if (model.charAt(0) === '/') model = model.slice(1, model.length);
     let e = <string>(endpoint).toString();
@@ -321,7 +329,7 @@ export class Resource<E, T, TA> {
     if (model.indexOf('/') !== -1) {
       for (let p in allModels) {
         if (allModels.hasOwnProperty(p)) {
-          let m = allModels[p];
+          // let m = allModels[p];
           if (UrlNestedParams.isValid(p)) {
             let urlModels = UrlNestedParams.getModels(p);
             if (UrlNestedParams.containsModels(model, urlModels)) {

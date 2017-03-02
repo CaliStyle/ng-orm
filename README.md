@@ -23,89 +23,15 @@ $ npm install ng-orm --save
 ## Import module
 
 ```ts
-	import {Ng2RestModule} from 'ng-orm';
+	import { Resource } from 'ng-orm/ng-orm';
 
 	@NgModule({
 	  bootstrap: [AppComponent],
 	  imports: [ 
-	    Ng2RestModule
+	    Resource
 	  ])
   export class AppModule { }
 ```
-
-## SimpleResource
-
-Quickest way to use your REST API
-```ts
-import { DatabaseService } from './database.service';
-
-@Component({
-...
-})
-export class DemoComponent implements OnInit, OnDestroy {
-  
-  // normaly you use use SimpleResource by extending 
-  // or having this object users inside service class
-  
-  public usersService = new SimpleResource<any, any> // <single,array> type
-	  ('http://demo9781896.mockable.io', 'users/:id');
-	  
-  constructor() {
-		SimpleResource.mockingMode.setBackendOnly();
-		
-		// OR if you wanna mock your data
-		// SimpleResource.mockingMode.setMocksOnly();
-		// this.db.users.mock.data = [
-		// 	{"name":"Bob mock","id":1},
-		// 	{"name":"Alice mock","id":2}
-		// ];
-	    // this.db.users.mock.controller = (r) => {
-	    //   return { data: r.data }
-	    // }
-	    
-  }
-
-  users = [];
-
-  public ngOnInit() {
-
-    this.users.mock.data = require('!raw-loader!./data.json');
-    this.users.mock.controller = (r) => {
-      return { data: r.data }
-    }
-    
-  }
-
- async getData() {
-    try {
-    
-      let users = await this.usersService.model().query();
-	  
-	  // soring in query params
-	  // let users = await this.usersService.model().query({ sort:'asc' });
-      if (users) {
-        this.users = users;
-      }
-	  
-	  // users manipulation GET, PUT, DELETE, POST
-	  let user = await this.usersService.model({ id:3 }).get();	
-      let user = await this.usersService.model({ id:3 }).update(users[0]);
-      await this.usersService.model({ id:3 }).remove();
-      await this.usersService.model().save({ name: 'Dariusz' });
-
-    } catch (e) {
-      console.error(e)
-    }
-  }
-
-  public ngOnDestroy() {
-    this.usersService.destroy();
-  }
-
-}
-
-
-
 
 ```
 Specification

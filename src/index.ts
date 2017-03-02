@@ -7,4 +7,4 @@ export * from './http';
 export * from './mock-backend';
 export * from './rest';
 export * from './mocking-mode';
-export * from './simple-resource';
+// export * from './simple-resource';

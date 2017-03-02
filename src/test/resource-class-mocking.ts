@@ -76,7 +76,7 @@ export class TestMockingClass {
       });
 
 
-      it('should go inside objectc on first level',
+      it('should go inside object on first level',
         inject([Resource, Http, MockBackend, Jsonp],
           (rest: Resource<APIS, User, User[]>, http: Http, backend: MockBackend, jp) => {
 
@@ -95,7 +95,7 @@ export class TestMockingClass {
             expect(deepEqual(d, d2)).toBeTruthy();
           }));
 
-      it('should go inside objectc on second level',
+      it('should go inside object on second level',
         inject([Resource, Http, MockBackend, Jsonp],
           (rest: Resource<APIS, User, User[]>, http: Http, backend: MockBackend, jp) => {
 
@@ -118,7 +118,7 @@ export class TestMockingClass {
             expect(deepEqual(d, d3)).toBeTruthy();
           }));
 
-      it('should go inside objectc on third level',
+      it('should go inside object on third level',
         inject([Resource, Http, MockBackend, Jsonp],
           (rest: Resource<APIS, User, User[]>, http: Http, backend: MockBackend, jp) => {
 

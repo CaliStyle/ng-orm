@@ -23,10 +23,10 @@ import {
   TestContracts,
   TestQueryParams,
   TestNestedParams,
-  TestSimpleRest
+  // TestSimpleRest
 } from './test';
 
-describe('ng2-rest', () => {
+describe('ng-orm', () => {
   // provide our implementations or mocks to the dependency injector
   beforeEach(() => {
     return TestBed.configureTestingModule({
@@ -52,5 +52,5 @@ describe('ng2-rest', () => {
   new TestContracts();
   TestQueryParams();
   TestNestedParams();
-  new TestSimpleRest()
+  // new TestSimpleRest()
 });
